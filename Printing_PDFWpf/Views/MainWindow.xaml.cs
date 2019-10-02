@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Printing_PDFWpf
+namespace Printing_PDFWpf.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
