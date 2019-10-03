@@ -1,11 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Printing_PDFWpf.ViewModels
 {
@@ -17,11 +12,12 @@ namespace Printing_PDFWpf.ViewModels
         {
             this.regionManager = regionManager;
         }
-        private DelegateCommand<string> _searchZipCommand;
-        public DelegateCommand<string> SearchZipCommand =>
-            _searchZipCommand ?? (_searchZipCommand = new DelegateCommand<string>(ExecuteSearchZipCommand));
 
-        void ExecuteSearchZipCommand(string parameter)
+        private DelegateCommand<string> _viewForecastCommand;
+        public DelegateCommand<string> ViewForecastView =>
+            _viewForecastCommand ?? (_viewForecastCommand = new DelegateCommand<string>(ExecuteViewForecastView));
+
+        void ExecuteViewForecastView(string parameter)
         {
             regionManager.RequestNavigate("ContentRegion", parameter);
         }

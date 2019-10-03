@@ -11,11 +11,12 @@
     <Window.Background>
         <ImageBrush ImageSource="../Images/clouds.jpeg"
                     Opacity=".5"
-                    Stretch="UniformToFill">            
+                    Stretch="UniformToFill">
         </ImageBrush>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -26,32 +27,38 @@
                        FontSize="70"
                        Foreground="white"/>
 
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="125"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
             <Label Grid.Column="0"
-                               Content="Zip-Code:"
-                               FontSize="20"
-                               FontWeight="Bold"
-                               Foreground="white"/>
-            <TextBox Grid.Column="0"
-                                 Width="120"
-                                 Height="20"
-                                 HorizontalAlignment="Left"/>
+                   Content="Zip-Code:"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   Foreground="white"/>
+            <TextBox Grid.Column="1"
+                    Width="120"
+                    Height="20"
+                    HorizontalAlignment="Left"/>
             <Button Grid.Column="2"
-                                Command="{Binding SearchZipCommand}"
-                                CommandParameter="ForcastView"
-                                HorizontalAlignment="Left"
-                                Width="50"
-                                Height="20"
-                                Background="white">
+                    Command="{Binding ViewForecastCommand}"
+                    CommandParameter="ForcastView"
+                    HorizontalAlignment="Left"
+                    Width="50"
+                    Height="20"
+                    Background="white">
                 <Button.Content>
                     <TextBlock Text="Search"/>
                 </Button.Content>
             </Button>
+        </Grid>
 
-        </StackPanel>
-        
         <ContentControl Name="contentRegion"
                         prism:RegionManager.RegionName="ContentRegion"
-                        Grid.Row="1">
+                        Grid.Row="2">            
         </ContentControl>
     </Grid>
 </Window>
