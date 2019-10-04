@@ -80,7 +80,7 @@
             </Button>
         </Grid>
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding ForecastList}" AutoGenerateColumns="true">
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Forecast}" AutoGenerateColumns="true">
             
         </DataGrid>
 

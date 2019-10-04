@@ -6,6 +6,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using RestSharp;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -40,6 +41,13 @@ namespace Printing_PDFWpf.ViewModels
             set { forecastList = value; }
         }
 
+        private ObservableCollection<List<ForecastModel>> forecast;
+
+        public ObservableCollection<List<ForecastModel>> Forecast
+        {
+            get { return forecast; }
+            set { SetProperty(ref forecast, value); }
+        }
 
         private string zip;
 
@@ -54,7 +62,7 @@ namespace Printing_PDFWpf.ViewModels
                 }
                 else
                 {
-                    ZipError = null;
+                    ZipError = value;
                 }
                 SetProperty(ref zip, value);
             }
