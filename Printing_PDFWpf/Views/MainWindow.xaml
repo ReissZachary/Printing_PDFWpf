@@ -40,12 +40,13 @@
                    FontWeight="Bold"
                    Foreground="white"/>
             <TextBox Grid.Column="1"
-                    Width="120"
-                    Height="20"
-                    HorizontalAlignment="Left"/>
+                     Text="{Binding Zip}"
+                     Width="120"
+                     Height="20"
+                     HorizontalAlignment="Left"/>
             <Button Grid.Column="2"
-                    Command="{Binding ViewForecastCommand}"
-                    CommandParameter="ForcastView"
+                    Command="{Binding ViewForecast}"
+                    CommandParameter="ForecastView"
                     HorizontalAlignment="Left"
                     Width="50"
                     Height="20"
@@ -56,7 +57,7 @@
             </Button>
         </Grid>
 
-        <ContentControl Name="contentRegion"
+        <ContentControl Name="contentArea"
                         prism:RegionManager.RegionName="ContentRegion"
                         Grid.Row="2">            
         </ContentControl>

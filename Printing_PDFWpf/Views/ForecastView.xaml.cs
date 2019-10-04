@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Printing_PDFWpf.Views
 {
     /// <summary>
-    /// Interaction logic for ForcastView.xaml
+    /// Interaction logic for ForecastView.xaml
     /// </summary>
-    public partial class ForcastView : Page
+    public partial class ForecastView : UserControl
     {
-        public ForcastView()
+        public ForecastView()
         {
             InitializeComponent();
         }

@@ -27,9 +27,11 @@ namespace Printing_PDFWpf
         //    //regionBehaviors.A
         //    base.ConfigureDefaultRegionBehaviors(regionBehaviors);
         //}
+
+           
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterForNavigation<ForecastView>();
         }
     }
 }
