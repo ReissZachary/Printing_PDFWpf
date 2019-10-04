@@ -40,7 +40,9 @@ namespace Printing_PDFWpf.ViewModels
         {
             get { return forecast; }
             set { SetProperty(ref forecast, value); }
-        }
+        }       
+
+      
         public async Task<List<double>> GetLocation(string zip)
         {
             var url = "http://dev.virtualearth.net/REST/v1/Locations/US/" + zip + "/1%20Microsoft%20Way?o=json&key=AsSjGkhZVfQ7oQw74JxKuxXJhswXesM_O4BEzLz-og-cIpdjIJ1wC2TLWSa6TL0B";
@@ -75,7 +77,10 @@ namespace Printing_PDFWpf.ViewModels
                 current.Pressure = record["main"]["pressure"].ToObject<double>();
                 current.Type = record["weather"][0]["main"].ToObject<string>();
                 current.Description = record["weather"][0]["description"].ToObject<string>();
-                current.Datetime = record["dt_txt"].ToString();
+                var Datetime = record["dt_txt"].ToString();
+                var DateAndTime = Datetime.Split(' ');
+                current.Date = DateAndTime[0];
+                current.Time = DateAndTime[1];
                 current.Speed = record["wind"]["speed"].ToObject<double>();
                 current.Deg = record["wind"]["deg"].ToObject<double>();
                 recordlist.Add(current);

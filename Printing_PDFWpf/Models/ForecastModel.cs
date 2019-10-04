@@ -9,7 +9,6 @@ namespace Printing_PDFWpf.Models
 {
     public class ForecastModel
     {
-
         public double Temp { get; set; }
         public double Pressure{get;set;}
         public double Humidity{get;set;}
@@ -17,8 +16,7 @@ namespace Printing_PDFWpf.Models
         public double Deg{get;set;}
         public string Type{get;set;}
         public string Description{get;set;}
-        public string Datetime{get;set;}
-
-
+        public string Date { get; set; }
+        public string Time{get;set;}
     }
 }
