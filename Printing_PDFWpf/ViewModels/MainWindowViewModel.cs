@@ -4,6 +4,7 @@ using Printing_PDFWpf.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using RestSharp;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -56,11 +57,13 @@ namespace Printing_PDFWpf.ViewModels
 
         public async Task getForecast(List<double> latAndLong)
         {
-            var url = "pro.openweathermap.org/data/2.5/forecast/hourly?lat="+System.Math.Round(latAndLong[0], 0)+ "&lon=" + System.Math.Round(latAndLong[1], 0)+ "&appid=084ad0fcd20d9037d08a7db8b55f99a2";
-            HttpResponseMessage response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            var jsonLocation = JObject.Parse(responseBody);
+            var client = new RestClient("https://community-open-weather-map.p.rapidapi.com/forecast?lat=" + System.Math.Round(latAndLong[0], 4) + "&lon=" + System.Math.Round(latAndLong[1], 4));
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com");
+            request.AddHeader("x-rapidapi-key", "109daa0c4fmsh59fa8ac8dd612e0p101d84jsn0d5858161f0b");
+            IRestResponse response = client.Execute(request);
+
+
         }
 
     }
