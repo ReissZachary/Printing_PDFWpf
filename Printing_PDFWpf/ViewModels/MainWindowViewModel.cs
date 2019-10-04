@@ -26,10 +26,9 @@ namespace Printing_PDFWpf.ViewModels
                 regionManager.RequestNavigate("ContentRegion", uri);
 
                 var location = await GetLocation(this.Zip);
-               var forecast = getForecast(location);
+                var forecast = getForecast(location);
             });
-
-        }        
+        }
 
         private string zip;
 
@@ -57,31 +56,13 @@ namespace Printing_PDFWpf.ViewModels
 
         public async Task getForecast(List<double> latAndLong)
         {
-            //var url = "https://api.weather.gov/";
-            var url = "https://api.weather.gov/points/"+ System.Math.Round(latAndLong[0], 4) + "," + System.Math.Round(latAndLong[1], 4) + "/forecast/hourly";
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("User-Agent", "SchoolApp");
-
-            
-            var request = new HttpRequestMessage(HttpMethod.Post, url);
-            request.Headers.Add("User-Agent", "MyApplication/v1.0 (http://foo.bar.baz; foo@bar.baz)");
-            var httpResponse = client.SendAsync(request).Result;
-
+            var url = "pro.openweathermap.org/data/2.5/forecast/hourly?lat="+System.Math.Round(latAndLong[0], 0)+ "&lon=" + System.Math.Round(latAndLong[1], 0)+ "&appid=084ad0fcd20d9037d08a7db8b55f99a2";
             HttpResponseMessage response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             var jsonLocation = JObject.Parse(responseBody);
         }
 
-
-
-        //private DelegateCommand<string> _viewForecastCommand;
-        //public DelegateCommand<string> ViewForecastView =>
-        //    _viewForecastCommand ?? (_viewForecastCommand = new DelegateCommand<string>(ExecuteViewForecastView));
-
-        //void ExecuteViewForecastView(string parameter)
-        //{
-        //    regionManager.RequestNavigate("ContentRegion", parameter);
-        //}
     }
 
 }
