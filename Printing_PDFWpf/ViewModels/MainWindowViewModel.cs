@@ -27,9 +27,17 @@ namespace Printing_PDFWpf.ViewModels
                 regionManager.RequestNavigate("ContentRegion", uri);
 
                 var location = await GetLocation(this.Zip);
-                var forecast = getForecast(location);
+                this.ForecastList = getForecast(location);
             });
         }
+        private List<ForecastModel> forecastList;
+
+        public List<ForecastModel> ForecastList
+        {
+            get { return forecastList; }
+            set { forecastList = value; }
+        }
+
 
         private string zip;
 
@@ -55,14 +63,32 @@ namespace Printing_PDFWpf.ViewModels
             return latAndLong;
         }
 
-        public async Task getForecast(List<double> latAndLong)
+        public List<ForecastModel> getForecast(List<double> latAndLong)
         {
             var client = new RestClient("https://community-open-weather-map.p.rapidapi.com/forecast?lat=" + System.Math.Round(latAndLong[0], 4) + "&lon=" + System.Math.Round(latAndLong[1], 4));
             var request = new RestRequest(Method.GET);
             request.AddHeader("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com");
             request.AddHeader("x-rapidapi-key", "109daa0c4fmsh59fa8ac8dd612e0p101d84jsn0d5858161f0b");
-            IRestResponse response = client.Execute(request);
+            var response = client.Execute(request).Content;
+            var jsonForcast = JObject.Parse(response)["list"];
 
+            var recordlist = new List<ForecastModel>();
+
+            foreach(var record in jsonForcast)
+            {
+                var current = new ForecastModel();
+                current.temp = record["main"]["temp"].ToObject<double>();
+                current.humidity = record["main"]["humidity"].ToObject<double>();
+                current.pressure = record["main"]["pressure"].ToObject<double>();
+                current.type = record["weather"][0]["main"].ToObject<string>();
+                current.description = record["weather"][0]["description"].ToObject<string>();
+                current.datetime = record["dt_txt"].ToString();
+                current.speed = record["wind"]["speed"].ToObject<double>();
+                current.deg = record["wind"]["deg"].ToObject<double>();
+                recordlist.Add(current);
+
+            }
+            return recordlist;
 
         }
 
