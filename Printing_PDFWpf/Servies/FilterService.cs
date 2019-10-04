@@ -32,6 +32,16 @@ namespace Printing_PDFWpf.Servies
         public ObservableCollection<ForecastModel> FilterByType(ObservableCollection<ForecastModel> forecast, string condition)
         {
             ObservableCollection<ForecastModel> newforecastlist = new ObservableCollection<ForecastModel>();
+            
+            
+                foreach (var cast in forecast)
+                {
+                    if (cast.Type == condition)
+                    {
+                        newforecastlist.Add(cast);
+                    }
+                }
+            
             return newforecastlist;
         }
     }
