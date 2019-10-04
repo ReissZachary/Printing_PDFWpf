@@ -32,6 +32,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="125"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0"
@@ -55,6 +56,13 @@
                     <TextBlock Text="Search"/>
                 </Button.Content>
             </Button>
+            <TextBlock Text="{Binding ZipError, ValidatesOnDataErrors=True}"
+                       Grid.Column="3"
+                       HorizontalAlignment="Left"
+                       Visibility="{Binding ZipErrorVisibility}"
+                       Margin="10"
+                       Background="#FFD7D7"
+                       Foreground="Red"/>
         </Grid>
 
         <ContentControl Name="contentArea"

@@ -81,9 +81,7 @@
         </Grid>
 
         <DataGrid Grid.Row="1" ItemsSource="{Binding ForecastList}" AutoGenerateColumns="true">
-            <DataGrid.Columns>
-
-            </DataGrid.Columns>
+            
         </DataGrid>
 
         <StackPanel Grid.Row="2"

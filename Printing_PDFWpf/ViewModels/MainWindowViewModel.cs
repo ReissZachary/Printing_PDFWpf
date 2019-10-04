@@ -6,13 +6,15 @@ using Prism.Mvvm;
 using Prism.Regions;
 using RestSharp;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Printing_PDFWpf.ViewModels
 {
-    public class MainWindowViewModel : BindableBase
+    public class MainWindowViewModel : BindableDataErrorInfoBase, INotifyPropertyChanged
     {
         private readonly IRegionManager regionManager;
 
@@ -23,7 +25,7 @@ namespace Printing_PDFWpf.ViewModels
         {
             this.regionManager = regionManager;
             ViewForecast = new DelegateCommand<string>(async(uri) =>
-            {
+            {              
                 regionManager.RequestNavigate("ContentRegion", uri);
 
                 var location = await GetLocation(this.Zip);
@@ -44,7 +46,37 @@ namespace Printing_PDFWpf.ViewModels
         public string Zip
         {
             get { return zip; }
-            set { zip = value; }
+            set 
+            {
+                if (value.Length < 5)
+                {
+                    ZipError = "*Zip must contain 5 numbers";
+                }
+                else
+                {
+                    ZipError = null;
+                }
+                SetProperty(ref zip, value);
+            }
+        }
+
+        private string zipError;
+        public string ZipError
+        {
+            get { return zipError; }
+            set
+            {
+                SetProperty(ref zipError, value);
+                ErrorDictionary[nameof(ZipError)] = value;
+                ZipErrorVisibility = value.IsLessThanFive() ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        private Visibility zipErrorVisibility;
+        public Visibility ZipErrorVisibility
+        {
+            get { return zipErrorVisibility; }
+            set { SetProperty(ref zipErrorVisibility, value); }
         }
 
 
@@ -86,12 +118,16 @@ namespace Printing_PDFWpf.ViewModels
                 current.speed = record["wind"]["speed"].ToObject<double>();
                 current.deg = record["wind"]["deg"].ToObject<double>();
                 recordlist.Add(current);
-
             }
             return recordlist;
-
         }
 
     }
 
+    public static class ExtensionMethod
+    {
+        public static bool IsLessThanFive(this string value){
+            return value.Length < 5;
+        }
+    }
 }
