@@ -60,10 +60,6 @@ namespace Printing_PDFWpf.ViewModels
                 {
                     ZipError = "*Zip must contain 5 numbers";
                 }
-                else
-                {
-                    ZipError = value;
-                }
                 SetProperty(ref zip, value);
             }
         }
