@@ -96,6 +96,7 @@
     <Compile Include="BindableDataErrorInfoBase.cs" />
     <Compile Include="Models\ForecastModel.cs" />
     <Compile Include="Servies\FilterService.cs" />
+    <Compile Include="Servies\GetDataService.cs" />
     <Compile Include="Servies\IFilterService.cs" />
     <Compile Include="ViewModels\ForecastViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

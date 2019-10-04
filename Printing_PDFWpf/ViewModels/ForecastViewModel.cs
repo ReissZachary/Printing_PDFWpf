@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Printing_PDFWpf.Models;
+using Printing_PDFWpf.Servies;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using RestSharp;
@@ -13,21 +15,97 @@ using System.Threading.Tasks;
 
 namespace Printing_PDFWpf.ViewModels
 {
-    public class ForecastViewModel: BindableBase,INavigationAware
+    public class ForecastViewModel: BindableBase, INavigationAware
     {
-        static readonly HttpClient client = new HttpClient();
-        public void ForecastModel()
+        private GetDataService getDataService;
+        private IFilterService filterService;
+        public DelegateCommand FilterByDate { get;}
+        public DelegateCommand FilterByTemp { get; }
+        public DelegateCommand FilterByType { get; }
+
+        public ForecastViewModel()
         {
+            getDataService = new GetDataService();
+            filterService = new FilterService();
 
+            FilterByDate = new DelegateCommand(() =>
+            {
+                this.filterByDate();
 
+            });
+
+            FilterByTemp = new DelegateCommand(() =>
+            {
+                this.filterByTemp();
+
+            });
+
+            FilterByType = new DelegateCommand(() =>
+            {
+                this.filterByType();
+
+            });
+
+        }
+
+        public void Reset()
+        {
+            Forecast = FilteredForecast;
+        }
+
+        private int temp;
+
+        public int Temp
+        {
+            get { return temp; }
+            set { temp = value; }
+        }
+        private string date;
+
+        public string Date
+        {
+            get { return date; }
+            set { date = value; }
+        }
+
+        private string time;
+
+        public string Time
+        {
+            get { return time; }
+            set { time = value; }
+        }
+
+        private string type;
+
+        public string Type
+        {
+            get { return type; }
+            set { type = value; }
+        }
+
+        public void filterByTemp()
+        {
+            Forecast = filterService.FilterByTemp(FilteredForecast, "LESS_THAN",Temp);
+        }
+
+        public void filterByDate()
+        {
+            Forecast = filterService.FilterByDate(FilteredForecast, Date);
+        }
+
+        public void filterByType()
+        {
+            Forecast = filterService.FilterByType(FilteredForecast, Type);
         }
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
             var zip = navigationContext.Parameters["zip"].ToString();
-            var location = await GetLocation(zip);
-            List<ForecastModel> forecast = getForecast(location);
+            var location = await getDataService.GetLocation(zip);
+            List<ForecastModel> forecast = getDataService.getForecast(location);
             this.Forecast = new ObservableCollection<ForecastModel>(forecast);
+            this.FilteredForecast = this.Forecast;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;
@@ -40,52 +118,15 @@ namespace Printing_PDFWpf.ViewModels
         {
             get { return forecast; }
             set { SetProperty(ref forecast, value); }
-        }       
-
-      
-        public async Task<List<double>> GetLocation(string zip)
-        {
-            var url = "http://dev.virtualearth.net/REST/v1/Locations/US/" + zip + "/1%20Microsoft%20Way?o=json&key=AsSjGkhZVfQ7oQw74JxKuxXJhswXesM_O4BEzLz-og-cIpdjIJ1wC2TLWSa6TL0B";
-            HttpResponseMessage response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            var jsonLocation = JObject.Parse(responseBody)["resourceSets"][0]["resources"][0]["geocodePoints"][0]["coordinates"];
-            var lat = jsonLocation[0].ToObject<double>();
-            var longitude = jsonLocation[1].ToObject<double>();
-            List<double> latAndLong = new List<double>();
-            latAndLong.Add(lat);
-            latAndLong.Add(longitude);
-            return latAndLong;
         }
 
-        public List<ForecastModel> getForecast(List<double> latAndLong)
+        private ObservableCollection<ForecastModel> filteredForecast;
+
+        public ObservableCollection<ForecastModel> FilteredForecast
         {
-            var client = new RestClient("https://community-open-weather-map.p.rapidapi.com/forecast?lat=" + System.Math.Round(latAndLong[0], 4) + "&lon=" + System.Math.Round(latAndLong[1], 4));
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com");
-            request.AddHeader("x-rapidapi-key", "109daa0c4fmsh59fa8ac8dd612e0p101d84jsn0d5858161f0b");
-            var response = client.Execute(request).Content;
-            var jsonForcast = JObject.Parse(response)["list"];
-
-            var recordlist = new List<ForecastModel>();
-
-            foreach (var record in jsonForcast)
-            {
-                var current = new ForecastModel();
-                current.Temp = record["main"]["temp"].ToObject<double>();
-                current.Humidity = record["main"]["humidity"].ToObject<double>();
-                current.Pressure = record["main"]["pressure"].ToObject<double>();
-                current.Type = record["weather"][0]["main"].ToObject<string>();
-                current.Description = record["weather"][0]["description"].ToObject<string>();
-                var Datetime = record["dt_txt"].ToString();
-                var DateAndTime = Datetime.Split(' ');
-                current.Date = DateAndTime[0];
-                current.Time = DateAndTime[1];
-                current.Speed = record["wind"]["speed"].ToObject<double>();
-                current.Deg = record["wind"]["deg"].ToObject<double>();
-                recordlist.Add(current);
-            }
-            return recordlist;
+            get { return filteredForecast; }
+            set { SetProperty(ref filteredForecast, value); }
         }
+
     }
 }
