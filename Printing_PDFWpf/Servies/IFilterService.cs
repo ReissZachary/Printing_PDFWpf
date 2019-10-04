@@ -11,5 +11,6 @@ namespace Printing_PDFWpf.Servies
     public interface IFilterService
     {
         ObservableCollection<ForecastModel> FilterByTemp(ObservableCollection<ForecastModel> forecast, string condition, double temp);
+        ObservableCollection<ForecastModel> FilterByType(ObservableCollection<ForecastModel> forecast, string condition);
     }
 }

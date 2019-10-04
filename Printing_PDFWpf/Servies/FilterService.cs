@@ -28,5 +28,11 @@ namespace Printing_PDFWpf.Servies
 
             return newforecastlist;
         }
+
+        public ObservableCollection<ForecastModel> FilterByType(ObservableCollection<ForecastModel> forecast, string condition)
+        {
+            ObservableCollection<ForecastModel> newforecastlist = new ObservableCollection<ForecastModel>();
+            return newforecastlist;
+        }
     }
 }
