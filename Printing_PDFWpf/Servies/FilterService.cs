@@ -9,11 +9,24 @@ using System.Threading.Tasks;
 namespace Printing_PDFWpf.Servies
 {
     public class FilterService:IFilterService
-    {      
+    {
 
         public ObservableCollection<ForecastModel> FilterByTemp(ObservableCollection<ForecastModel> forecast, string condition, double temp)
         {
-            throw new NotImplementedException();
+            ObservableCollection<ForecastModel> newforecastlist = new ObservableCollection<ForecastModel>();
+            if (condition == "LESS_THAN")
+            {
+                foreach(var cast in forecast)
+                {
+                    if(cast.Temp < temp)
+                    {
+                        newforecastlist.Add(cast);
+                    }
+                }
+            }
+
+
+            return newforecastlist;
         }
     }
 }
