@@ -9,14 +9,15 @@ namespace Printing_PDFWpf.Models
 {
     public class ForecastModel
     {
-        public double temp;
-        public double pressure;
-        public double humidity;
-        public double speed;
-        public double deg;
-        public string type;
-        public string description;
-        public string datetime;
+
+        public double Temp { get; set; }
+        public double Pressure{get;set;}
+        public double Humidity{get;set;}
+        public double Speed{get;set;}
+        public double Deg{get;set;}
+        public string Type{get;set;}
+        public string Description{get;set;}
+        public string Datetime{get;set;}
 
 
     }
