@@ -30,15 +30,9 @@ namespace Printing_PDFWpf.ViewModels
             this.Forecast = new ObservableCollection<ForecastModel>(forecast);
         }
 
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            throw new NotImplementedException();
-        }
+        public bool IsNavigationTarget(NavigationContext navigationContext) => true;
 
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            throw new NotImplementedException();
-        }
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
 
         private ObservableCollection<ForecastModel> forecast;
 
