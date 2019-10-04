@@ -10,6 +10,11 @@ namespace Printing_PDFWpf.Servies
 {
     public class FilterService:IFilterService
     {
+        public ObservableCollection<ForecastModel> FilterByDate(ObservableCollection<ForecastModel> forecast, string condition)
+        {
+            ObservableCollection<ForecastModel> newforecastlist = new ObservableCollection<ForecastModel>();
+            return newforecastlist;
+        }
 
         public ObservableCollection<ForecastModel> FilterByTemp(ObservableCollection<ForecastModel> forecast, string condition, double temp)
         {
