@@ -8,11 +8,18 @@ using System.Threading.Tasks;
 
 namespace Printing_PDFWpf.Servies
 {
-    public class FilterService:IFilterService
+    public class FilterService : IFilterService
     {
         public ObservableCollection<ForecastModel> FilterByDate(ObservableCollection<ForecastModel> forecast, string condition)
         {
             ObservableCollection<ForecastModel> newforecastlist = new ObservableCollection<ForecastModel>();
+            foreach (var cast in forecast)
+            {
+                if (cast.Date == condition)
+                {
+                    newforecastlist.Add(cast);
+                }
+            }
             return newforecastlist;
         }
 
@@ -21,9 +28,9 @@ namespace Printing_PDFWpf.Servies
             ObservableCollection<ForecastModel> newforecastlist = new ObservableCollection<ForecastModel>();
             if (condition == "LESS_THAN")
             {
-                foreach(var cast in forecast)
+                foreach (var cast in forecast)
                 {
-                    if(cast.Temp < temp)
+                    if (cast.Temp < temp)
                     {
                         newforecastlist.Add(cast);
                     }
@@ -37,16 +44,16 @@ namespace Printing_PDFWpf.Servies
         public ObservableCollection<ForecastModel> FilterByType(ObservableCollection<ForecastModel> forecast, string condition)
         {
             ObservableCollection<ForecastModel> newforecastlist = new ObservableCollection<ForecastModel>();
-            
-            
-                foreach (var cast in forecast)
+
+
+            foreach (var cast in forecast)
+            {
+                if (cast.Type == condition)
                 {
-                    if (cast.Type == condition)
-                    {
-                        newforecastlist.Add(cast);
-                    }
+                    newforecastlist.Add(cast);
                 }
-            
+            }
+
             return newforecastlist;
         }
     }

@@ -54,7 +54,7 @@ namespace FilterSeviceTest
         public void DataCanBeFilterdByDate()
         {
             ObservableCollection<ForecastModel> filteredlist = filterService.FilterByDate(forecast, "2019-10-01");
-            if (filteredlist.Count == 7)
+            if (filteredlist.Count == 3)
             {
                 Assert.Pass();
             }
@@ -120,13 +120,13 @@ namespace FilterSeviceTest
 
             var Forecast9 = new ForecastModel();
             Forecast9.Temp = 350;
-            Forecast9.Date = "2019-10-02";
+            Forecast9.Date = "2019-10-01";
             Forecast9.Time = "00:00:00";
             Forecast9.Type = "Clear";
 
             var Forecast10 = new ForecastModel();
             Forecast10.Temp = 250;
-            Forecast10.Date = "2019-10-03";
+            Forecast10.Date = "2019-10-01";
             Forecast10.Time = "00:00:00";
             Forecast10.Type = "Clear";
 
