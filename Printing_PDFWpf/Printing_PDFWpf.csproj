@@ -163,8 +163,7 @@
     <Resource Include="Images\clouds.jpeg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\magnifySearchIcon.png" />
+    <Resource Include="Images\sun.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
