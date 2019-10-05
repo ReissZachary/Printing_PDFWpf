@@ -33,6 +33,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0"
                    Content="Temp:"
@@ -94,6 +95,16 @@
                     Background="white">
                 <Button.Content>
                     <TextBlock Text="Filter"/>
+                </Button.Content>
+            </Button>
+            <Button Grid.Column="9"
+                    Command="{Binding Reset}"
+                    HorizontalAlignment="Center"
+                    Width="50"
+                    Height="20"
+                    Background="white">
+                <Button.Content>
+                    <TextBlock Text="Reset"/>
                 </Button.Content>
             </Button>
         </Grid>

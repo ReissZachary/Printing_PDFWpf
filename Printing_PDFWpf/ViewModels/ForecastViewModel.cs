@@ -17,14 +17,17 @@ namespace Printing_PDFWpf.ViewModels
 {
     public class ForecastViewModel: BindableBase, INavigationAware
     {
+        private PDFGeneratorService pdfService;
         private GetDataService getDataService;
         private IFilterService filterService;
         public DelegateCommand FilterByDate { get;}
         public DelegateCommand FilterByTemp { get; }
         public DelegateCommand FilterByType { get; }
+        public DelegateCommand GeneratePDF { get; }
 
         public ForecastViewModel()
         {
+            pdfService = new PDFGeneratorService();
             getDataService = new GetDataService();
             filterService = new FilterService();
 
@@ -46,6 +49,17 @@ namespace Printing_PDFWpf.ViewModels
 
             });
 
+            GeneratePDF = new DelegateCommand(() =>
+            {
+                this.generate();
+            }
+            );
+
+        }
+
+        public void generate()
+        {
+            pdfService.GeneratePDF(Forecast);
         }
 
         public void Reset()
